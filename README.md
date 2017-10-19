@@ -89,7 +89,16 @@ instead of `"react-native-camera": "^1.0.0"`.
 - Pull Request Reviews and even more welcome! we need help testing, reviewing, and updating open PRs
 - If you are interested in contributing more actively, please contact me (same username on Twitter, Facebook, etc.) Thanks!
 - We are now on [Open Collective](https://opencollective.com/react-native-camera#sponsor)! Contributions are appreciated and will be used to fund core contributors. [more details](#open-collective)
+<<<<<<< HEAD
 - If you want to help us coding, join Expo slack https://slack.expo.io/, so we can chat over there. (#react-native-camera)
+=======
+
+#### Breaking Changes
+##### android build tools has been bumped to 25.0.2, please update (can be done via android cli or AndroidStudio)
+##### react-native header imports have changed in v0.40, and that means breaking changes for all! [Reference PR & Discussion](https://github.com/lwansbrough/react-native-camera/pull/544).
+- if on react-native < 0.40: `npm i react-native-camera@0.4`
+- if on react-native >= 0.40 `npm i react-native-camera@0.6`
+>>>>>>> Manual controls
 
 ##### Permissions
 To use the camera on Android you must ask for camera permission:
@@ -216,10 +225,58 @@ cp node_modules/react-native-camera/postinstall_project/projectWithoutFaceDetect
 
 And add something like this to the `scripts` section in your `package.json`:
 
+<<<<<<< HEAD
 *Note:* The face detection/text recognition code is excluded by default for the **CocoaPods** installation.
 ```
 "postinstall": "./scripts/post.sh",
 ```
+=======
+#### `iso`
+
+Use the `iso` property to define the sensor sensitivity (ISO).
+
+On iOS, use `getSupportedISORange` to obtain the range of valid values for this property. Setting this property on iOS disables the automatic exposure algorithm.
+
+On Android, use `getSupportedISOValues` to obtain a list of valid values for this property. An empty list means this setting is not supported on the device.
+
+#### `iOS` `exposureDuration`
+
+Use the `exposureDuration` property to set the exposure duration (in seconds).
+
+Use `getSupportedExposureDurationRange` to obtain the range of valid values for this property. Setting this property disables the automatic exposure algorithm.
+
+#### `exposureCompensation`
+
+Use the `exposureCompensation` property to define the bias to be applied to the target exposure value (in EV units).
+
+Use `getSupportedExposureCompensationRange` to obtain the range of valid valures for this property.
+
+#### `whiteBalancePreset`
+
+Values:
+`Camera.constants.WhiteBalancePreset.auto`,
+`Camera.constants.WhiteBalancePreset.cloudyDaylight`,
+`Camera.constants.WhiteBalancePreset.daylight`,
+`Camera.constants.WhiteBalancePreset.fluorescent`,
+`Camera.constants.WhiteBalancePreset.incandescent`,
+`Camera.constants.WhiteBalancePreset.shade`,
+`Camera.constants.WhiteBalancePreset.twilight`,
+`Camera.constants.WhiteBalancePreset.warmFluorescent`
+
+Use the `whiteBalancePreset` property to set a white balance preset.
+
+On Android, those constants map to the presets defined by the [API](https://developer.android.com/reference/android/hardware/Camera.Parameters.html#WHITE_BALANCE_AUTO).
+
+On iOS, they map to temperature settings defined by `react-native-camera` itself. Those presets do not necessarily look the same on both platforms. This option exists on iOS merely to make the API more consistent across platforms. iOS provides a much finer control of the white balance that can be accessed using the `whiteBalance` property.
+
+#### `iOS` `whiteBalance`
+
+Use the `whiteBalance` property to adjust the white balance. Do not use `whiteBalance` and `whiteBalancePreset` at the same time.
+
+This property is an object containing two values: `temperature` contains the color temperature in kelvin and `tint` is a value between -150 and +150.
+
+#### `iOS` `onFocusChanged: Event { nativeEvent: { touchPoint: { x, y } }`
+>>>>>>> Manual controls
 
 ##### Installing GMV frameworks
 GMV (Google Mobile Vision) is used for Face detection/Text recognition by the iOS RNCamera. You have to link the google frameworks to your project to successfully compile the RNCamera project.
@@ -264,7 +321,13 @@ Google Symbol Utilities: https://www.gstatic.com/cpdc/dbffca986f6337f8-GoogleSym
 
 2. Extract everything to one folder. Delete "BarcodeDetector" and "copy" folders from Google Mobile Vision.
 
+<<<<<<< HEAD
 3. Open XCode, right click on your project and choose "New Group". Rename the new folder to "Frameworks". Right click on "Frameworks" and select "add files to 'YOUR_PROJECT'". Select all content from the folder of step 2, click on Options. Select "Copy items if needed", leave "Create groups" selected and choose all your targets on the "Add to targets" section. Then, click on "Add".
+=======
+(_If you find that you need to use this option because your images are incorrectly oriented by default,
+could please submit a PR and include the make model of the device.  We believe that it's not
+required functionality any more and would like to remove it._)
+>>>>>>> Manual controls
 
 4. On your target -> Build Phases -> Link Binary with Libraries -> add AddressBook.framework
 5. On your target -> Build Settings -> Other Linker Flags -> add -lz, -ObjC and -lc++
@@ -315,7 +378,35 @@ allprojects {
 }
 ```
 
+<<<<<<< HEAD
 The current Android library defaults to the below values for the Google SDK and Libraries,
+=======
+#### `getSupportedISORange(): Promise`
+
+The promise returned by this method resolves to an object containing the keys `min` and `max` that define the minimum and maximum ISO values respectively.
+
+On iOS, any value in the returned range is valid.
+
+On Android, only some predetermined values are valid. The `getSupportedISOValues` method should be used in this case.
+
+#### `Android` `getSupportedISOValues(): Promise`
+
+The promise returned by this method resolves to an array of integers that are the ISO values accepted on the device. An empty array indicates that this setting is not supported by the device.
+
+#### `iOS` `getSupportedExposureDurationRange(): Promise`
+
+The promise returned by this method resolves to an object containing the keys `min` and `max` that define the minimum and maximum exposure times (in seconds) respectively.
+
+#### `getSupportedExposureCompensationRange(): Promise`
+
+The promise returned by this method resolves to an object containing the keys `min`, `max` and `step` that define the range of valid exposure compensation values.
+
+On iOS, any value between `min` and `max` is valid, therefore the `step` value will always be zero.
+
+On Android, the valid values are `min`, `min + step`, `min + 2*step`, ..., `max`, however, any value between `min` and `max` can be passed to `exposureCompensation`. The closest valid setting will be used.
+
+#### `hasFlash(): Promise`
+>>>>>>> Manual controls
 
 ```gradle
 def DEFAULT_COMPILE_SDK_VERSION             = 26

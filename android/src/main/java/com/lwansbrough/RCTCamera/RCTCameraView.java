@@ -10,7 +10,6 @@ import android.view.OrientationEventListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.View;
-
 import java.util.List;
 
 public class RCTCameraView extends ViewGroup {
@@ -25,6 +24,9 @@ public class RCTCameraView extends ViewGroup {
     private int _flashMode = -1;
     private int _zoom = 0;
     private boolean _clearWindowBackground = false;
+    private int _iso = -1;
+    private double _exposureCompensation = 0;
+    private String _whiteBalancePreset = null;
 
     public RCTCameraView(Context context) {
         super(context);
@@ -82,6 +84,15 @@ public class RCTCameraView extends ViewGroup {
                 _viewFinder.setZoom(this._zoom);
             }
             _viewFinder.setClearWindowBackground(this._clearWindowBackground);
+            if (-1 != this._iso) {
+                _viewFinder.setISO(this._iso);
+            }
+            if (0 != this._exposureCompensation) {
+                _viewFinder.setExposureCompensation(this._exposureCompensation);
+            }
+            if (null != this._whiteBalancePreset) {
+                _viewFinder.setWhiteBalancePreset(this._whiteBalancePreset);
+            }
             addView(_viewFinder);
         }
     }
@@ -125,6 +136,27 @@ public class RCTCameraView extends ViewGroup {
         RCTCamera.getInstance().setOrientation(orientation);
         if (this._viewFinder != null) {
             layoutViewFinder();
+        }
+    }
+
+    public void setISO(int iso) {
+        this._iso = iso;
+        if (this._viewFinder != null) {
+            this._viewFinder.setISO(iso);
+        }
+    }
+
+    public void setExposureCompensation(double exposureCompensation) {
+        this._exposureCompensation = exposureCompensation;
+        if (this._viewFinder != null) {
+            this._viewFinder.setExposureCompensation(exposureCompensation);
+        }
+    }
+
+    public void setWhiteBalancePreset(String preset) {
+        this._whiteBalancePreset = preset;
+        if (this._viewFinder != null) {
+            this._viewFinder.setWhiteBalancePreset(preset);
         }
     }
 

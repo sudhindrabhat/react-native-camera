@@ -376,6 +376,45 @@ public class RCTCamera {
                 camera.setParameters(parameters);
             }
         }
+
+    public void setISO(int cameraType, int iso) {
+      Camera camera = this.acquireCameraInstance(cameraType);
+      if(null == camera) {
+        return;
+      }
+
+      Camera.Parameters parameters = camera.getParameters();
+      String key = RCTCameraUtils.findISOParameter(parameters);
+
+      if(null == key) {
+        return;
+      }
+
+      parameters.set(key, iso != -1 ? String.valueOf(iso) : "auto");
+      camera.setParameters(parameters);
+    }
+
+    public void setExposureCompensation(int cameraType, double exposureCompensation) {
+      Camera camera = this.acquireCameraInstance(cameraType);
+      if(null == camera) {
+        return;
+      }
+
+      Camera.Parameters parameters = camera.getParameters();
+      double step = parameters.getExposureCompensationStep();
+      parameters.setExposureCompensation((int) (exposureCompensation/step));
+      camera.setParameters(parameters);
+    }
+
+    public void setWhiteBalancePreset(int cameraType, String preset) {
+      Camera camera = this.acquireCameraInstance(cameraType);
+      if(null == camera) {
+        return;
+      }
+
+      Camera.Parameters parameters = camera.getParameters();
+      parameters.setWhiteBalance(preset != null ? preset : RCTCameraModule.RCT_CAMERA_WHITE_BALANCE_AUTO);
+      camera.setParameters(parameters);
     }
 
     public void adjustCameraRotationToDeviceOrientation(int type, int deviceOrientation) {

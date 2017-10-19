@@ -1,10 +1,13 @@
 package com.lwansbrough.RCTCamera;
 
+
 import android.support.annotation.Nullable;
 
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
+import com.facebook.react.bridge.ReadableMap;
+
 import com.facebook.react.uimanager.*;
 import com.facebook.react.uimanager.annotations.ReactProp;
 
@@ -125,8 +128,33 @@ public class RCTCameraViewManager extends ViewGroupManager<RCTCameraView> {
         view.setBarCodeTypes(result);
     }
 
+
     @ReactProp(name = "clearWindowBackground")
     public void setClearWindowBackground(RCTCameraView view, boolean clearWindowBackground) {
         view.setClearWindowBackground(clearWindowBackground);
+
+    @ReactProp(name = "iso")
+    public void setISO(RCTCameraView view, int iso) {
+        view.setISO(iso);
+    }
+
+    @ReactProp(name = "exposureCompensation")
+    public void setExposureCompensation(RCTCameraView view, double exposureCompensation) {
+      view.setExposureCompensation(exposureCompensation);
+    }
+
+    @ReactProp(name = "exposureDuration")
+    public void setExposureDuration(RCTCameraView view, double exposureDuration) {
+      //Not supported on Android.
+    }
+
+    @ReactProp(name = "whiteBalancePreset")
+    public void setWhiteBalancePreset(RCTCameraView view, String preset) {
+      view.setWhiteBalancePreset(preset);
+    }
+
+    @ReactProp(name = "whiteBalance")
+    public void setWhiteBalance(RCTCameraView view, ReadableMap whiteBalance) {
+      //Not supported on Android.
     }
 }
