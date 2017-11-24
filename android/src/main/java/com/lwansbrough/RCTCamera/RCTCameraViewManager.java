@@ -144,7 +144,7 @@ public class RCTCameraViewManager extends ViewGroupManager<RCTCameraView> {
     }
 
     @ReactProp(name = "exposureDuration")
-    public void setExposureDuration(RCTCameraView view, double exposureDuration) {
+    public void setExposureDuration(RCTCameraView view, ReadableMap exposureDuration) {
       //Not supported on Android.
     }
 
