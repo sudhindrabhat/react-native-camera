@@ -764,6 +764,8 @@ public class RCTCameraModule extends ReactContextBaseJavaModule
                 camera.setParameters(parameters);
             }
         }
+    }
+    
     private List<Integer> getSupportedISOValues(Camera camera) {
       List<Integer> result = new ArrayList<>();
       Camera.Parameters parameters = camera.getParameters();

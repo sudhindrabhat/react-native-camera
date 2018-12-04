@@ -376,6 +376,7 @@ public class RCTCamera {
                 camera.setParameters(parameters);
             }
         }
+    }
 
     public void setISO(int cameraType, int iso) {
       Camera camera = this.acquireCameraInstance(cameraType);

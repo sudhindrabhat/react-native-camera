@@ -132,6 +132,7 @@ public class RCTCameraViewManager extends ViewGroupManager<RCTCameraView> {
     @ReactProp(name = "clearWindowBackground")
     public void setClearWindowBackground(RCTCameraView view, boolean clearWindowBackground) {
         view.setClearWindowBackground(clearWindowBackground);
+    }
 
     @ReactProp(name = "iso")
     public void setISO(RCTCameraView view, int iso) {
