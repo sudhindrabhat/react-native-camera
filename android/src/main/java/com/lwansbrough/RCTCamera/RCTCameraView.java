@@ -13,6 +13,7 @@ import android.view.View;
 import java.util.List;
 
 public class RCTCameraView extends ViewGroup {
+    private static final String TAG = "RCTCameraView";
     private final OrientationEventListener _orientationListener;
     private final Context _context;
     private RCTCameraViewFinder _viewFinder = null;
@@ -119,6 +120,9 @@ public class RCTCameraView extends ViewGroup {
     }
 
     public void setFlashMode(int flashMode) {
+        Log.d(TAG, "Set flash ");
+        Log.v(TAG, "Set flash ");
+        Log.i(TAG, "Set flash ");
         this._flashMode = flashMode;
         if (this._viewFinder != null) {
             this._viewFinder.setFlashMode(flashMode);
@@ -147,6 +151,9 @@ public class RCTCameraView extends ViewGroup {
     }
 
     public void setExposureCompensation(double exposureCompensation) {
+        Log.d(TAG, "Set exposure ");
+        Log.v(TAG, "Set exposure ");
+        Log.i(TAG, "Set exposure ");
         this._exposureCompensation = exposureCompensation;
         if (this._viewFinder != null) {
             this._viewFinder.setExposureCompensation(exposureCompensation);

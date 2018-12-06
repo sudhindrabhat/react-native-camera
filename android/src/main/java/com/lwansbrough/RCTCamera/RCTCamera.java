@@ -343,6 +343,8 @@ public class RCTCamera {
             return;
         }
         Log.d(TAG, "Set flash rctcamera");
+        Log.v(TAG, "Set flash rctcamera");
+        Log.i(TAG, "Set flash rctcamera");
         Camera.Parameters parameters = camera.getParameters();
         String value = parameters.getFlashMode();
         switch (flashMode) {
@@ -402,6 +404,8 @@ public class RCTCamera {
         return;
       }
       Log.d(TAG, "Set exposure rctcamera");
+      Log.v(TAG, "Set exposure rctcamera");
+      Log.i(TAG, "Set exposure rctcamera");
       Camera.Parameters parameters = camera.getParameters();
       double step = parameters.getExposureCompensationStep();
       parameters.setExposureCompensation((int) (exposureCompensation/step));

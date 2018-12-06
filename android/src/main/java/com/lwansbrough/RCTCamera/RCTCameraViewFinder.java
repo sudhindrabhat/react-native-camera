@@ -35,6 +35,7 @@ import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
 
 class RCTCameraViewFinder extends TextureView implements TextureView.SurfaceTextureListener, Camera.PreviewCallback {
+    private static final String TAG = "RCTCameraViewFinder";
     private int _cameraType;
     private int _captureMode = RCTCameraModule.RCT_CAMERA_CAPTURE_MODE_STILL;
     private SurfaceTexture _surfaceTexture;
@@ -144,6 +145,9 @@ class RCTCameraViewFinder extends TextureView implements TextureView.SurfaceText
     }
 
     public void setFlashMode(int flashMode) {
+        Log.d(TAG, "Set flash ");
+        Log.v(TAG, "Set flash ");
+        Log.i(TAG, "Set flash ");
         this._flashMode = flashMode;
         updateFlashSetting();
     }
@@ -154,6 +158,9 @@ class RCTCameraViewFinder extends TextureView implements TextureView.SurfaceText
     }
 
     public void setExposureCompensation(double exposureCompensation) {
+        Log.d(TAG, "Set exposure ");
+        Log.v(TAG, "Set exposure ");
+        Log.i(TAG, "Set exposure ");
         RCTCamera.getInstance().setExposureCompensation(_cameraType, exposureCompensation);
         this._exposureCompensation = exposureCompensation;
     }
