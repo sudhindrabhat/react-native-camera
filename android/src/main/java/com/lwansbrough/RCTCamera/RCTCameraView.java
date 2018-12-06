@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.View;
 import java.util.List;
+import android.util.Log;
 
 public class RCTCameraView extends ViewGroup {
     private static final String TAG = "RCTCameraView";
