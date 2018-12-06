@@ -341,7 +341,7 @@ public class RCTCamera {
         if (null == camera) {
             return;
         }
-
+        Log.d(TAG, "Set flash rctcamera");
         Camera.Parameters parameters = camera.getParameters();
         String value = parameters.getFlashMode();
         switch (flashMode) {
@@ -400,7 +400,7 @@ public class RCTCamera {
       if(null == camera) {
         return;
       }
-
+      Log.d(TAG, "Set exposure rctcamera");
       Camera.Parameters parameters = camera.getParameters();
       double step = parameters.getExposureCompensationStep();
       parameters.setExposureCompensation((int) (exposureCompensation/step));
