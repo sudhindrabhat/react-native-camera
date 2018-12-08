@@ -230,6 +230,8 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
 
     private int mFlash;
 
+    private double mExposureCompensation;
+
     private int mDisplayOrientation;
 
     private float mFocusDepth;
@@ -454,6 +456,14 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
                 }
             }
         }
+    }
+
+    //@Override
+    void setExposureCompensation(double exposureCompensation) {
+        if (exposureCompensation == mExposureCompensation) {
+            return;
+        }
+        return;
     }
 
     @Override

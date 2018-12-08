@@ -479,6 +479,7 @@ public class RNCameraView extends CameraView implements LifecycleEventListener, 
       }
     } else {
       RNCameraViewHelper.emitMountErrorEvent(this, "Camera permissions not granted - component could not be rendered.");
+
     }
   }
 

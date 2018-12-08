@@ -102,6 +102,22 @@ public class CameraViewManager extends ViewGroupManager<RNCameraView> {
     view.setWhiteBalance(whiteBalance);
   }
 
+//  //todo: whiteBalancePreset?
+//  @ReactProp(name = "iso")
+//  public void setISO(RNCameraView view, int iso) {
+//    view.setISO(iso);
+//  }
+//
+  @ReactProp(name = "exposureCompensation")
+  public void setExposureCompensation(RNCameraView view, double exposureCompensation) {
+    view.setExposureCompensation(exposureCompensation);
+  }
+//
+//  @ReactProp(name = "exposureDuration")
+//  public void setExposureDuration(RCTCameraView view, ReadableMap exposureDuration) {
+//    //Not supported on Android.
+//  }
+
   @ReactProp(name = "pictureSize")
   public void setPictureSize(RNCameraView view, String size) {
     view.setPictureSize(size.equals("None") ? null : Size.parse(size));

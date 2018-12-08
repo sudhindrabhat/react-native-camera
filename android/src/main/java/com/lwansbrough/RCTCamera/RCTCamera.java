@@ -16,6 +16,7 @@ import java.lang.Math;
 
 public class RCTCamera {
     private static final String TAG = "RCTCamera";
+
     private static RCTCamera ourInstance;
     private final HashMap<Integer, CameraInfoWrapper> _cameraInfos;
     private final HashMap<Integer, Integer> _cameraTypeToIndex;

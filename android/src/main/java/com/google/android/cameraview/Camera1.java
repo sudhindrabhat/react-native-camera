@@ -96,6 +96,8 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
 
     private int mFlash;
 
+    private double mExposureCompensation;
+
     private int mDisplayOrientation;
 
     private float mZoom;
@@ -316,6 +318,16 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
             return;
         }
         if (setFlashInternal(flash)) {
+            mCamera.setParameters(mCameraParameters);
+        }
+    }
+
+    @Override
+    void setExposureCompensation(double exposureCompensation) {
+        if (exposureCompensation == mExposureCompensation) {
+            return;
+        }
+        if (setExposureCompensationInternal(exposureCompensation)) {
             mCamera.setParameters(mCameraParameters);
         }
     }
@@ -579,6 +591,7 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
         mCameraParameters.setRotation(calcCameraRotation(mDisplayOrientation));
         setAutoFocusInternal(mAutoFocus);
         setFlashInternal(mFlash);
+        setExposureCompensationInternal(mExposureCompensation);
         setAspectRatio(mAspectRatio);
         setZoomInternal(mZoom);
         setWhiteBalanceInternal(mWhiteBalance);
@@ -717,6 +730,25 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
             return false;
         } else {
             mFlash = flash;
+            return false;
+        }
+    }
+
+    /**
+     * @return {@code true} if {@link #mCameraParameters} was modified.
+     */
+    private boolean setExposureCompensationInternal(double exposureCompensation) {
+        if (isCameraOpened()) {
+            if(mCameraParameters.getMaxExposureCompensation() == 0 && mCameraParameters.getMinExposureCompensation() == 0) {
+                return false;
+            }
+            mExposureCompensation = exposureCompensation;
+            double step = mCameraParameters.getExposureCompensationStep();
+            mCameraParameters.setExposureCompensation((int) (exposureCompensation/step));
+            return true;
+            //return false;
+        } else {
+            mExposureCompensation = exposureCompensation;
             return false;
         }
     }

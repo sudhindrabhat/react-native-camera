@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
 });
 
 const CameraManager = NativeModules.CameraManager || NativeModules.CameraModule;
-const CAMERA_REF = 'camera';
 
 function convertNativeProps(props) {
   const newProps = { ...props };
@@ -96,7 +95,6 @@ export default class Camera extends Component {
     FlashMode: CameraManager.FlashMode,
     Zoom: CameraManager.Zoom,
     TorchMode: CameraManager.TorchMode,
-    WhiteBalancePreset: CameraManager.WhiteBalancePreset
   };
 
   static propTypes = {
@@ -109,20 +107,6 @@ export default class Camera extends Component {
     defaultOnFocusComponent: PropTypes.bool,
     flashMode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     zoom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    iso: PropTypes.number,
-    exposureCompensation: PropTypes.number,
-    exposureDuration: PropTypes.shape({
-      value: PropTypes.number.isRequired,
-      scale: PropTypes.number.isRequired
-    }),
-    whiteBalancePreset: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
-    whiteBalance: PropTypes.shape({
-      temperature: PropTypes.number.isRequired,
-      tint: PropTypes.number.isRequired
-    }),
     keepAwake: PropTypes.bool,
     onBarCodeRead: PropTypes.func,
     barcodeScannerEnabled: PropTypes.bool,
@@ -408,46 +392,6 @@ export default class Camera extends Component {
     }
 
     return CameraManager.setZoom(zoom);
-  getSupportedISOValues() {
-    if (Platform.OS === 'android') {
-      const props = convertNativeProps(this.props);
-      return CameraManager.getSupportedISOValues({
-        type: props.type
-      });
-    }
-
-    //On iOS we can use any value in a range.
-    return Promise.resolve([]);
-  }
-
-  getSupportedISORange() {
-    if (Platform.OS === 'android') {
-      const props = convertNativeProps(this.props);
-      return CameraManager.getSupportedISORange({
-        type: props.type
-      });
-    }
-
-    return CameraManager.getSupportedISORange();
-  }
-
-  getSupportedExposureCompensationRange() {
-    if (Platform.OS === 'android') {
-      const props = convertNativeProps(this.props);
-      return CameraManager.getSupportedExposureCompensationRange({
-        type: props.type
-      });
-    }
-    return CameraManager.getSupportedExposureCompensationRange();
-  }
-
-  getSupportedExposureDurationRange() {
-    if (Platform.OS === 'ios') {
-      return CameraManager.getSupportedExposureDurationRange();
-    }
-
-    //Not supported on Android:
-    return Promise.resolve({});
   }
 }
 
