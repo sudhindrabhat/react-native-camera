@@ -408,6 +408,7 @@ export default class Camera extends Component {
     }
 
     return CameraManager.setZoom(zoom);
+  }
   getSupportedISOValues() {
     if (Platform.OS === 'android') {
       const props = convertNativeProps(this.props);
