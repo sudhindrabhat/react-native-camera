@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
 });
 
 const CameraManager = NativeModules.CameraManager || NativeModules.CameraModule;
-const CAMERA_REF = 'camera';
 
 function convertNativeProps(props) {
   const newProps = { ...props };
