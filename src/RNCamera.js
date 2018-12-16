@@ -80,6 +80,7 @@ type EventCallbackArgumentsType = {
 
 type PropsType = typeof View.props & {
   zoom?: number,
+  exposureCompensation?: number,
   ratio?: string,
   focusDepth?: number,
   type?: number | string,

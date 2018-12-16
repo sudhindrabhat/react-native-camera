@@ -744,7 +744,8 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
             }
             mExposureCompensation = exposureCompensation;
             double step = mCameraParameters.getExposureCompensationStep();
-            mCameraParameters.setExposureCompensation((int) (exposureCompensation/step));
+            //mCameraParameters.setExposureCompensation((int) (exposureCompensation/step));
+            mCameraParameters.setExposureCompensation((int) (exposureCompensation));
             return true;
             //return false;
         } else {
