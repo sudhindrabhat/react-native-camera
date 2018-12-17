@@ -488,11 +488,11 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
     }
 
     @Override
-    void setISO(double iso) {
+    void setISO(int iso) {
         if (iso == mIso) {
             return;
         }
-        
+
         mIso = iso;
         if (mPreviewRequestBuilder != null) {
             mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,

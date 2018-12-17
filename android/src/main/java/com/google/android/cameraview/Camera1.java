@@ -345,7 +345,7 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
     }
 
     @Override
-    void setISO(double iso) {
+    void setISO(int iso) {
         if (iso == mIso) {
             return;
         }
