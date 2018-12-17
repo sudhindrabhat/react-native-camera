@@ -463,6 +463,9 @@ public class CameraView extends FrameLayout {
 
     public void setExposureCompensation(double exposureCompensation) {mImpl.setExposureCompensation(exposureCompensation);}
 
+    public void setExposureDuration(double exposureDuration) {mImpl.setExposureDuration(exposureDuration);}
+
+    public void setISO(int iso) {mImpl.setISO(iso);}
     /**
      * Gets the current flash mode.
      *

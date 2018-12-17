@@ -232,6 +232,10 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
 
     private double mExposureCompensation;
 
+    private double mExposureDuration;
+
+    private int mIso;
+
     private int mDisplayOrientation;
 
     private float mFocusDepth;
@@ -458,11 +462,46 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
         }
     }
 
-    //@Override
+    @Override
     void setExposureCompensation(double exposureCompensation) {
         if (exposureCompensation == mExposureCompensation) {
             return;
         }
+        return;
+    }
+
+    @Override
+    void setExposureDuration(double exposureDuration) {
+        if (exposureDuration == mExposureDuration) {
+            return;
+        }
+        mExposureDuration = exposureDuration;
+        if (mPreviewRequestBuilder != null) {
+            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                    CaptureRequest.CONTROL_AE_MODE_ON);
+            mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
+                    CaptureRequest.FLASH_MODE_OFF);
+            mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, exposureDuration);
+
+        }
+        return;
+    }
+
+    @Override
+    void setISO(double iso) {
+        if (iso == mIso) {
+            return;
+        }
+        
+        mIso = iso;
+        if (mPreviewRequestBuilder != null) {
+            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                    CaptureRequest.CONTROL_AE_MODE_ON);
+            mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
+                    CaptureRequest.FLASH_MODE_OFF);
+            mPreviewRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, iso);
+        }
+
         return;
     }
 

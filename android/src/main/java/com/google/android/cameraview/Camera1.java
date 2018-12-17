@@ -98,6 +98,10 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
 
     private double mExposureCompensation;
 
+    private double mExposureDuration;
+
+    private int mIso;
+
     private int mDisplayOrientation;
 
     private float mZoom;
@@ -328,6 +332,24 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
             return;
         }
         if (setExposureCompensationInternal(exposureCompensation)) {
+            mCamera.setParameters(mCameraParameters);
+        }
+    }
+
+    @Override
+    void setExposureDuration(double exposureDuration) {
+        if (exposureDuration == mExposureDuration) {
+            return;
+        }
+        return;
+    }
+
+    @Override
+    void setISO(double iso) {
+        if (iso == mIso) {
+            return;
+        }
+        if (setISOInternal(iso)) {
             mCamera.setParameters(mCameraParameters);
         }
     }
@@ -748,11 +770,21 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
             mCameraParameters.setExposureCompensation((int) (exposureCompensation));
             return true;
             //return false;
-        } else {
-            mExposureCompensation = exposureCompensation;
-            return false;
         }
+        mExposureCompensation = exposureCompensation;
+        return false;
     }
+
+    private boolean setISOInternal(int iso) {
+        if (isCameraOpened()) {
+            mIso = iso;
+            mCameraParameters.set("iso", iso != -1 ? String.valueOf(iso) : "auto");
+            return true;
+        }
+        mIso = iso;
+        return false;
+    }
+
 
     /**
      * @return {@code true} if {@link #mCameraParameters} was modified.
