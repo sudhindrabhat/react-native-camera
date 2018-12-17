@@ -481,7 +481,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
                     CaptureRequest.CONTROL_AE_MODE_ON);
             mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
                     CaptureRequest.FLASH_MODE_OFF);
-            mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, exposureDuration);
+            mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long)exposureDuration);
 
         }
         return;
