@@ -385,6 +385,21 @@ class Camera1 extends CameraViewImpl implements MediaRecorder.OnInfoListener,
     }
 
     @Override
+    int getISO() {
+        return mIso;
+    }
+
+    @Override
+    double getExposureCompensation() {
+        return mExposureCompensation;
+    }
+
+    @Override
+    double getExposureDuration() {
+        return mExposureDuration;
+    }
+
+    @Override
     public void setWhiteBalance(int whiteBalance) {
         if (whiteBalance == mWhiteBalance) {
             return;

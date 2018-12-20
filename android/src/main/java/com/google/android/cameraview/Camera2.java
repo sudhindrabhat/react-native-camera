@@ -518,6 +518,21 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
     }
 
     @Override
+    int getISO() {
+        return mIso;
+    }
+
+    @Override
+    double getExposureCompensation() {
+        return mExposureCompensation;
+    }
+
+    @Override
+    double getExposureDuration() {
+        return mExposureDuration;
+    }
+
+    @Override
     void takePicture(ReadableMap options) {
         mCaptureCallback.setOptions(options);
 

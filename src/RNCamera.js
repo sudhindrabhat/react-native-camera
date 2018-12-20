@@ -82,7 +82,7 @@ type PropsType = typeof View.props & {
   zoom?: number,
   iso?: number,
   exposureCompensation?: number,
-  exposureuration: number,
+  exposureuration?: number,
   ratio?: string,
   focusDepth?: number,
   type?: number | string,
@@ -185,6 +185,9 @@ export default class Camera extends React.Component<PropsType, StateType> {
   static propTypes = {
     ...ViewPropTypes,
     zoom: PropTypes.number,
+    iso: PropTypes.number,
+    exposureCompensation: PropTypes.number,
+    exposureuration: PropTypes.number,
     ratio: PropTypes.string,
     focusDepth: PropTypes.number,
     onMountError: PropTypes.func,

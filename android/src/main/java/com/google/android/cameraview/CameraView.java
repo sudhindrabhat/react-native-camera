@@ -224,6 +224,10 @@ public class CameraView extends FrameLayout {
         state.whiteBalance = getWhiteBalance();
         state.scanning = getScanning();
         state.pictureSize = getPictureSize();
+        state.exposureCompensation = getExposureCompensation();
+        state.exposureDuration = getExposureDuration();
+        state.iso = getISO();
+
         return state;
     }
 
@@ -244,6 +248,10 @@ public class CameraView extends FrameLayout {
         setWhiteBalance(ss.whiteBalance);
         setScanning(ss.scanning);
         setPictureSize(ss.pictureSize);
+        setExposureCompensation(ss.exposureCompensation);
+        SetExposureDuration(ss.exposureDuration);
+        setISO(ss.iso);
+
     }
 
     public void setUsingCamera2Api(boolean useCamera2) {
@@ -463,9 +471,21 @@ public class CameraView extends FrameLayout {
 
     public void setExposureCompensation(double exposureCompensation) {mImpl.setExposureCompensation(exposureCompensation);}
 
+    public double getExposureCompensation() {
+        return mImpl.getExposureCompensation();
+    }
+
     public void setExposureDuration(double exposureDuration) {mImpl.setExposureDuration(exposureDuration);}
 
+    public double getExposureDuration() {
+        return mImpl.getExposureDuration();
+    }
+
     public void setISO(int iso) {mImpl.setISO(iso);}
+
+    public int getISO() {
+        return mImpl.getISO();
+    }
     /**
      * Gets the current flash mode.
      *
@@ -634,6 +654,12 @@ public class CameraView extends FrameLayout {
         
         Size pictureSize;
 
+        double exposureCompensation;
+
+        double exposureDuration;
+
+        int iso;
+
         @SuppressWarnings("WrongConstant")
         public SavedState(Parcel source, ClassLoader loader) {
             super(source);
@@ -646,6 +672,9 @@ public class CameraView extends FrameLayout {
             whiteBalance = source.readInt();
             scanning = source.readByte() != 0;
             pictureSize = source.readParcelable(loader);
+            exposureCompensation = source.readDouble();
+            exposureDuration = source.readDouble();
+            iso = source.readInt();
         }
 
         public SavedState(Parcelable superState) {
@@ -664,6 +693,9 @@ public class CameraView extends FrameLayout {
             out.writeInt(whiteBalance);
             out.writeByte((byte) (scanning ? 1 : 0));
             out.writeParcelable(pictureSize, flags);
+            out.writeDouble(exposureDuration);
+            out.writeDouble(exposureCompensation);
+            out.writeInt(iso);
         }
 
         public static final Creator<SavedState> CREATOR
