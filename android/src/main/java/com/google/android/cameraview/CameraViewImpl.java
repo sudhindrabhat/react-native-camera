@@ -76,15 +76,15 @@ abstract class CameraViewImpl {
 
     abstract void setISO(int iso);
 
-    abstract void getISO();
+    abstract int getISO();
 
     abstract void setExposureCompensation(double exposureCompensation);
 
-    abstract void getExposureCompensation();
+    abstract double getExposureCompensation();
 
     abstract void setExposureDuration(double exposureDuration);
 
-    abstract void getExposureDuration();
+    abstract double getExposureDuration();
 
     abstract int getFlash();
 
