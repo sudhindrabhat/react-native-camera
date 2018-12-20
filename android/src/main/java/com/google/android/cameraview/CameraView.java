@@ -249,7 +249,7 @@ public class CameraView extends FrameLayout {
         setScanning(ss.scanning);
         setPictureSize(ss.pictureSize);
         setExposureCompensation(ss.exposureCompensation);
-        SetExposureDuration(ss.exposureDuration);
+        setExposureDuration(ss.exposureDuration);
         setISO(ss.iso);
 
     }
