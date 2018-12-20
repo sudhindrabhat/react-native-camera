@@ -984,7 +984,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
     void updateExposureDuration() {
         //todo: handle when exposure is not set,by setting default exposure? or the caller has to take care of this!
         mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                CaptureRequest.CONTROL_AE_MODE_ON);
+                CaptureRequest.CONTROL_AE_MODE_OFF);
         mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
                 CaptureRequest.FLASH_MODE_OFF);
         mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long)mExposureDuration);
@@ -996,7 +996,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
 
     void updateISO() {
         mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                CaptureRequest.CONTROL_AE_MODE_ON);
+                CaptureRequest.CONTROL_AE_MODE_OFF);
         mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
                 CaptureRequest.FLASH_MODE_OFF);
         mPreviewRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, mIso);
