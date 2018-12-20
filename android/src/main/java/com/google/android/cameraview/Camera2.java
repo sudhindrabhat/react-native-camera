@@ -116,6 +116,8 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             mInitialCropRegion = mPreviewRequestBuilder.get(CaptureRequest.SCALER_CROP_REGION);
             updateAutoFocus();
             updateFlash();
+            updateExposureDuration();
+            updateISO();
             updateFocusDepth();
             updateWhiteBalance();
             updateZoom();
@@ -475,16 +477,19 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
         if (exposureDuration == mExposureDuration) {
             return;
         }
+        int saved = mExposureDuration;
         mExposureDuration = exposureDuration;
         if (mPreviewRequestBuilder != null) {
-            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                    CaptureRequest.CONTROL_AE_MODE_ON);
-            mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
-                    CaptureRequest.FLASH_MODE_OFF);
-            mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long)exposureDuration);
-
+            updateExposureDuration();
+            if (mCaptureSession != null) {
+                try {
+                    mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
+                            mCaptureCallback, null);
+                } catch (CameraAccessException e) {
+                    mExposureDuration = saved; // Revert
+                }
+            }
         }
-        return;
     }
 
     @Override
@@ -492,17 +497,19 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
         if (iso == mIso) {
             return;
         }
-
+        int saved = mIso;
         mIso = iso;
         if (mPreviewRequestBuilder != null) {
-            mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                    CaptureRequest.CONTROL_AE_MODE_ON);
-            mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
-                    CaptureRequest.FLASH_MODE_OFF);
-            mPreviewRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, iso);
+            updateISO();
+            if (mCaptureSession != null) {
+                try {
+                    mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
+                            mCaptureCallback, null);
+                } catch (CameraAccessException e) {
+                    mIso = saved; // Revert
+                }
+            }
         }
-
-        return;
     }
 
     @Override
@@ -959,6 +966,27 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
         }
     }
 
+    void updateExposureDuration() {
+        //todo: handle when exposure is not set,by setting default exposure? or the caller has to take care of this!
+        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                CaptureRequest.CONTROL_AE_MODE_ON);
+        mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
+                CaptureRequest.FLASH_MODE_OFF);
+        mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long)mExposureDuration);
+    }
+
+    void updateExposureCompensation() {
+        return;
+    }
+
+    void updateISO() {
+        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                CaptureRequest.CONTROL_AE_MODE_ON);
+        mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
+                CaptureRequest.FLASH_MODE_OFF);
+        mPreviewRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, mIso);
+    }
+
     /**
      * Updates the internal state of focus depth to {@link #mFocusDepth}.
      */
@@ -1197,6 +1225,8 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, null);
             updateAutoFocus();
             updateFlash();
+            updateExposureDuration();
+            updateISO();
             if (mIsScanning) {
                 mImageFormat = ImageFormat.YUV_420_888;
                 startCaptureSession();
