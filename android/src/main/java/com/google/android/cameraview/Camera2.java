@@ -477,7 +477,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
         if (exposureDuration == mExposureDuration) {
             return;
         }
-        int saved = mExposureDuration;
+        double saved = mExposureDuration;
         mExposureDuration = exposureDuration;
         if (mPreviewRequestBuilder != null) {
             updateExposureDuration();
