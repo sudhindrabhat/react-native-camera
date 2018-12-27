@@ -1029,11 +1029,12 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
 
     void updateExposureDuration() {
         //todo: handle when exposure is not set,by setting default exposure? or the caller has to take care of this!
-        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                CaptureRequest.CONTROL_AE_MODE_OFF);
-        mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
-                CaptureRequest.FLASH_MODE_OFF);
-        mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long)mExposureDuration);
+//        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+//                CaptureRequest.CONTROL_AE_MODE_OFF);
+//        mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
+//                CaptureRequest.FLASH_MODE_OFF);
+//        mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long)mExposureDuration);
+        return;
     }
 
     void updateExposureCompensation() {
@@ -1041,11 +1042,12 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
     }
 
     void updateISO() {
-        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                CaptureRequest.CONTROL_AE_MODE_OFF);
-        mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
-                CaptureRequest.FLASH_MODE_OFF);
-        mPreviewRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, mIso);
+//        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+//                CaptureRequest.CONTROL_AE_MODE_OFF);
+//        mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
+//                CaptureRequest.FLASH_MODE_OFF);
+//        mPreviewRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, mIso);
+        return;
     }
 
     /**
@@ -1180,6 +1182,22 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
                     captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
                             CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
                     break;
+            }
+            if(mExposureDuration != 0) {
+                captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                        CaptureRequest.CONTROL_AE_MODE_OFF);
+                captureRequestBuilder.set(CaptureRequest.FLASH_MODE,
+                        CaptureRequest.FLASH_MODE_OFF);
+                captureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long)mExposureDuration);
+
+            }
+            if(mIso != 0) {
+                captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                        CaptureRequest.CONTROL_AE_MODE_OFF);
+                captureRequestBuilder.set(CaptureRequest.FLASH_MODE,
+                        CaptureRequest.FLASH_MODE_OFF);
+                captureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, mIso);
+
             }
             captureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, getOutputRotation());
             captureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, mPreviewRequestBuilder.get(CaptureRequest.SCALER_CROP_REGION));
