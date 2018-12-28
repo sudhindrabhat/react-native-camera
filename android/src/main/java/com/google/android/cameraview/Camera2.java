@@ -124,7 +124,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             updateZoom();
             try {
                 mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
-                        mCaptureCallback, mHandler);
+                        mCaptureCallback, null);
             } catch (CameraAccessException e) {
                 Log.e(TAG, "Failed to start camera preview because it couldn't access camera", e);
             } catch (IllegalStateException e) {
@@ -330,11 +330,11 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             mCamera.close();
             mCamera = null;
         }
-        if (mCameraThread != null) {
+        //if (mCameraThread != null) {
             //mCameraThread.quit();
             //mHandler = null;
-            stopBackgroundThread();
-        }
+            //stopBackgroundThread();
+        //}
         if (mStillImageReader != null) {
             mStillImageReader.close();
             mStillImageReader = null;
@@ -459,7 +459,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             if (mCaptureSession != null) {
                 try {
                     mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
-                            mCaptureCallback, mHandler);
+                            mCaptureCallback, null);
                 } catch (CameraAccessException e) {
                     mAutoFocus = !mAutoFocus; // Revert
                 }
@@ -484,7 +484,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             if (mCaptureSession != null) {
                 try {
                     mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
-                            mCaptureCallback, mHandler);
+                            mCaptureCallback, null);
                 } catch (CameraAccessException e) {
                     mFlash = saved; // Revert
                 }
@@ -512,7 +512,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             if (mCaptureSession != null) {
                 try {
                     mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
-                            mCaptureCallback, mHandler);
+                            mCaptureCallback, null);
                 } catch (CameraAccessException e) {
                     mExposureDuration = saved; // Revert
                 }
@@ -532,7 +532,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             if (mCaptureSession != null) {
                 try {
                     mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
-                            mCaptureCallback, mHandler);
+                            mCaptureCallback, null);
                 } catch (CameraAccessException e) {
                     mIso = saved; // Revert
                 }
@@ -592,7 +592,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
                 mPreviewRequestBuilder.addTarget(surface);
                 mPreviewRequestBuilder.addTarget(mMediaRecorderSurface);
                 mCamera.createCaptureSession(Arrays.asList(surface, mMediaRecorderSurface),
-                    mSessionCallback, mHandler);
+                    mSessionCallback, null);
                 mMediaRecorder.start();
                 mIsRecording = true;
                 return true;
@@ -628,7 +628,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             updateFocusDepth();
             try {
                 mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
-                        mCaptureCallback, mHandler);
+                        mCaptureCallback, null);
             } catch (CameraAccessException e) {
                 mFocusDepth = saved;  // Revert
             }
@@ -651,7 +651,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
           updateZoom();
           try {
               mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
-                  mCaptureCallback, mHandler);
+                  mCaptureCallback, null);
           } catch (CameraAccessException e) {
               mZoom = saved;  // Revert
           }
@@ -674,7 +674,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
             updateWhiteBalance();
             try {
                 mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(),
-                    mCaptureCallback, mHandler);
+                    mCaptureCallback, null);
             } catch (CameraAccessException e) {
                 mWhiteBalance = saved;  // Revert
             }
@@ -820,7 +820,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
         }
         mStillImageReader = ImageReader.newInstance(mPictureSize.getWidth(), mPictureSize.getHeight(),
                 ImageFormat.JPEG, 1);
-        mStillImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mHandler);
+        mStillImageReader.setOnImageAvailableListener(mOnImageAvailableListener, null);
     }
 
     private void prepareScanImageReader() {
@@ -830,7 +830,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
         Size largest = mPreviewSizes.sizes(mAspectRatio).last();
         mScanImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),
                 ImageFormat.YUV_420_888, 1);
-        mScanImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mHandler);
+        mScanImageReader.setOnImageAvailableListener(mOnImageAvailableListener, null);
     }
 
     private void startBackgroundHandler() {
@@ -856,8 +856,8 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
      */
     private void startOpeningCamera() {
         try {
-            startBackgroundHandler();
-            mCameraManager.openCamera(mCameraId, mCameraDeviceCallback, mHandler);
+            //startBackgroundHandler();
+            mCameraManager.openCamera(mCameraId, mCameraDeviceCallback, null);
         } catch (CameraAccessException e) {
             throw new RuntimeException("Failed to open camera: " + mCameraId, e);
         }
@@ -883,7 +883,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
                 mPreviewRequestBuilder.addTarget(mScanImageReader.getSurface());
             }
             mCamera.createCaptureSession(Arrays.asList(surface, mStillImageReader.getSurface(),
-                    mScanImageReader.getSurface()), mSessionCallback, mHandler);
+                    mScanImageReader.getSurface()), mSessionCallback, null);
         } catch (CameraAccessException e) {
             mCallback.onMountError();
         }
@@ -1137,7 +1137,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
                 CaptureRequest.CONTROL_AF_TRIGGER_START);
         try {
             mCaptureCallback.setState(PictureCaptureCallback.STATE_LOCKING);
-            mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mHandler);
+            mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, null);
         } catch (CameraAccessException e) {
             Log.e(TAG, "Failed to lock focus.", e);
         }
@@ -1214,7 +1214,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
                                 unlockFocus();
                             }
                         }
-                    }, mHandler);
+                    }, null);
         } catch (CameraAccessException e) {
             Log.e(TAG, "Cannot capture a still picture.", e);
         }
@@ -1301,7 +1301,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
         mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
                 CaptureRequest.CONTROL_AF_TRIGGER_CANCEL);
         try {
-            mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, mHandler);
+            mCaptureSession.capture(mPreviewRequestBuilder.build(), mCaptureCallback, null);
             updateAutoFocus();
             updateFlash();
             updateExposureDuration();
@@ -1313,7 +1313,7 @@ class Camera2 extends CameraViewImpl implements MediaRecorder.OnInfoListener, Me
                 mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
                         CaptureRequest.CONTROL_AF_TRIGGER_IDLE);
                 mCaptureSession.setRepeatingRequest(mPreviewRequestBuilder.build(), mCaptureCallback,
-                        mHandler);
+                        null);
                 mCaptureCallback.setState(PictureCaptureCallback.STATE_PREVIEW);
             }
         } catch (CameraAccessException e) {
